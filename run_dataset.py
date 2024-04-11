@@ -29,12 +29,14 @@ while(cv2.waitKey(10) != ord('q')):
     if not windows:
         call("clear")
     print("Predicted steering angle: " + str(degrees) + " degrees")
+    cv2.namedWindow("frame",cv2.WINDOW_KEEPRATIO)
     cv2.imshow("frame", full_image)
     #平滑角度
     smoothed_angle += 0.2 * pow(abs((degrees - smoothed_angle)), 2.0 / 3.0) * (degrees - smoothed_angle) / abs(degrees - smoothed_angle)
     #获取一个旋转矩阵，用于旋转方向盘图像
     M = cv2.getRotationMatrix2D((cols/2,rows/2),-smoothed_angle,1)
     dst = cv2.warpAffine(img,M,(cols,rows))
+    cv2.namedWindow("steering wheel",cv2.WINDOW_KEEPRATIO)
     cv2.imshow("steering wheel", dst)
     i += 1
 
